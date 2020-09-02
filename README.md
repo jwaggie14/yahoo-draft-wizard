@@ -7,3 +7,5 @@ Initial release. Version .000000000000000001. Very developmental.
 Install with ```pip install yahoo-draft-wizard```
 
 You will also need to install yahoo_oauth with ```pip install yahoo_oauth```
+
+You can find supporting files here: https://github.com/jwaggie14/ydw-supporting-files
