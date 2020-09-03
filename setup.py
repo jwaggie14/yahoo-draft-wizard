@@ -5,13 +5,17 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="yahoo-draft-wizard", # Replace with your own username
-    version="0.0.1",
+    version="0.0.2",
     author="James Whiting",
     author_email="jlwhiting@outlook.com",
     description="Dynamically recommends picks for your yahoo fantasy football draft",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/jwaggie14/yahoo-draft-wizard",
+    install_requires=[
+        'numpy',
+        'pandas',
+        'yahoo_oauth'],
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
