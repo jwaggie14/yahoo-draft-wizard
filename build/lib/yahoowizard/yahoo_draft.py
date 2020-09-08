@@ -11,7 +11,7 @@ oauth = OAuth2(None, None, from_file='oauth.json')
 if not oauth.token_is_valid():
     oauth.refresh_access_token()
 
-oc_mult = dict(zip(['QB','RB','WR','TE','K','D/ST'],[.3,.5,.5,.3,.15,.15]))
+oc_mult = dict(zip(['QB','RB','WR','TE','K','DST'],[.3,.5,.5,.3,.15,.15]))
 
 flex_positions = ['RB','WR','TE']
     
@@ -46,7 +46,7 @@ class YahooDraft:
             'RB':'RB',
             'TE':'TE',
             'W/R/T':'FLEX',
-            'DEF':'D/ST',
+            'DEF':'DST',
             'K':'K',
             'BN':'BEN'
         }
@@ -80,7 +80,7 @@ class YahooDraft:
     
     def scrape_draft(self):
         players = {}
-        teams = 10
+        teams = self.num_teams
         for i in range(1,teams+1):
             _url = f"{self.league_url}/teams;team_keys=nfl.l.{self.league_id}.t.{i}/players"
             _r = oauth.session.get(_url)
@@ -102,7 +102,7 @@ class YahooDraft:
         filled_slots = projections[projections['yahoo_id'].isin(self.team_roster.index)]['position'].value_counts()
         open_slots = self.req_positions.subtract(filled_slots, fill_value=0)
 
-        needs = open_slots[['QB','RB','WR','TE','K','D/ST']]
+        needs = open_slots[['QB','RB','WR','TE','K','DST']]
         flex_need = needs[flex_positions].min() >= 0
 
         pos_needs = pd.DataFrame(open_slots > 0, columns=['slot'])

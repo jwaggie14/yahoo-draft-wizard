@@ -30,3 +30,12 @@ def blacklist_player(name,team,df):
     print(df[mask][['player','team','position']])
     df['blacklist'] = np.where(mask, True, df['blacklist'])
     return df
+
+def blacklist_position(position):
+    "positions can be: 'QB','RB','WR','TE','DST','K'"
+    df['blacklist'] = np.where(df['position'] == position, True, df['blacklist'])
+    return df
+
+def unblacklist_position(position):
+    "positions can be: 'QB','RB','WR','TE','DST','K'"
+    df['blacklist'] = np.where(df['position'] == position, False, df['blacklist'])
