@@ -75,6 +75,8 @@ class YahooDraft:
         self.slot_needs(projections)
         projections = self.filter_players(projections)
         projections['need_adj'] = projections['position'].map(self.pos_needs['need'])
+        projections['bench_count'] = projections['position'].map(self.slot_requirements)
+        projections['bench_count'] = np.clip(-projections['bench_count'], 0, 10)
         return projections
         
     
@@ -102,14 +104,15 @@ class YahooDraft:
     def slot_needs(self, projections):
         filled_slots = projections[projections['yahoo_id'].isin(self.team_roster.index)]['position'].value_counts()
         open_slots = self.req_positions.subtract(filled_slots, fill_value=0)
-
-        needs = open_slots[['QB','RB','WR','TE','K','DST']]
+        
+        needs = open_slots[['QB','RB','WR','TE','FLEX','K','DST']]
         flex_need = needs[flex_positions].min() >= 0
 
         pos_needs = pd.DataFrame(open_slots > 0, columns=['slot'])
         pos_needs['flex'] = np.where(pos_needs.index.isin(flex_positions), flex_need, False)
         pos_needs['need'] = pos_needs['slot'] | pos_needs['flex']
         self.pos_needs = pos_needs
+        self.slot_requirements =  needs
         pass
     
     
