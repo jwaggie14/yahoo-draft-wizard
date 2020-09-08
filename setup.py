@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="yahoo-draft-wizard", # Replace with your own username
-    version="0.0.7",
+    version="0.0.8",
     author="James Whiting",
     author_email="jlwhiting@outlook.com",
     description="Dynamically recommends picks for your yahoo fantasy football draft",
