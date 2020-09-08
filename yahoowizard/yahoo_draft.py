@@ -48,7 +48,8 @@ class YahooDraft:
             'W/R/T':'FLEX',
             'DEF':'DST',
             'K':'K',
-            'BN':'BEN'
+            'BN':'BEN',
+            'IR':'BEN'
         }
         
         for c in rp:
