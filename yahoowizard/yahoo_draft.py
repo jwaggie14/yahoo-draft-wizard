@@ -76,7 +76,7 @@ class YahooDraft:
         projections = self.filter_players(projections)
         projections['need_adj'] = projections['position'].map(self.pos_needs['need'])
         projections['bench_count'] = projections['position'].map(self.slot_requirements)
-        projections['bench_count'] = np.clip(-projections['bench_count'], 0, 10)
+        projections['bench_count'] = np.clip(-projections['bench_count'] + 1, 0, 10)
         return projections
         
     

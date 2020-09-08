@@ -18,7 +18,7 @@ def expected_max(df):
 
 def adj_probs(players,probs, next_pick, next_pick2):
     # players['oc_adj'] = players['need_adj']*1 + ~players['need_adj']*players['oc_mult']
-    players['penalty'] = np.where(players['need_adj'], players['oc_mult'] * players['bench_count'], 0)
+    players['penalty'] = players['oc_mult'] * players['bench_count']
     players['penalty'] = np.clip(players['penalty'], 0, 1)
     players['oc_adj'] = 1 - players['penalty']
     players['espn_id'] = players['espn_id'].astype(str)

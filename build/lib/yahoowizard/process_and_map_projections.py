@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-oc_mult = dict(zip(['QB','RB','WR','TE','K','D/ST'],[.3,.5,.5,.3,.15,.15]))
+oc_mult = dict(zip(['QB','RB','WR','TE','K','D/ST'],[2/3, 1/4, 1/4, 2/3, 1, 1]))
 
 def process_projections(projection_path,idmap_path,output_path):
     print("1 of 4: reading projections")
@@ -22,9 +22,10 @@ def process_projections(projection_path,idmap_path,output_path):
     proj['oc_mult'] = proj['position'].map(oc_mult)
     proj.index = proj['espn_id']
     proj.index.name = None
-    id_map = pd.read_json('nfl.json').T
-    idcols = ['player_id','stats_id','yahoo_id','espn_id','rotowire_id','rotoworld_id','fantasy_data_id','sportradar_id']
-    proj = proj.merge(id_map[idcols].astype(str), how='left', on='espn_id')
+    id_map = pd.read_excel('broad_id_map.xlsx', dtype=str)
+    proj = proj.merge(id_map, how='left', on='espn_id')
+    proj.index = proj['espn_id']
+    proj.index.name = None
     print("3 of 4: saving pickle")
     proj.to_pickle(output_path)
     print("4 of 4: done")
